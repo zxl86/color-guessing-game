@@ -52,9 +52,11 @@ function bindClickHandler() {
 
 function bindNewColors() {
     const newColors = document.querySelector('.newColors');
+    const result = document.querySelector('.result');
     newColors.addEventListener('click', () => {
         refreshColors();
         pickColor();
+        result.textContent = '';
     });
 }
 
@@ -73,11 +75,11 @@ function bindHard() {
     })
 }
 
-function _init() {
+function _main() {
     refreshColors();
     pickColor();
     bindClickHandler();
     bindNewColors();
 }
 
-_init();
+_main();
