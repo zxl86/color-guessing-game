@@ -2,9 +2,22 @@ function getRandomInt(max) {
     return Math.floor(Math.random() * (Math.floor(max) + 1));
 }
 
-function refreshColors(squareNum) {
-    const squares = document.querySelectorAll('.square');
+//check current difficulty level and return corresponding number of squares
+function getSquareNum() {
+    const hard = document.querySelector('.level .hard');
+    let squareNum = 0;
+    if (hard.classList.contains('selected')) {
+        squareNum = 9;
+    } else {
+        squareNum = 3;
+    }
+    return squareNum;
+}
+
+function refreshColors() {
+    const squareNum = getSquareNum();
     const banner = document.querySelector('.banner');
+    const squares = document.querySelectorAll('.square');
     banner.style.backgroundColor = 'transparent';
     for (let i = 0; i < squareNum; i++) {
         const squareShow = squares[i];
@@ -19,7 +32,8 @@ function refreshColors(squareNum) {
     }
 }
 
-function pickColor(squareNum) {
+function pickColor() {
+    const squareNum = getSquareNum();
     const squares = document.querySelectorAll('.square');
     const i = getRandomInt(squareNum - 1);
     const pickedColor = squares[i].style.backgroundColor;
@@ -28,11 +42,13 @@ function pickColor(squareNum) {
 }
 
 function changeAllColors(squares, banner, color) {
-    squares.forEach((el) => {
+    const squareNum = getSquareNum();
+    for (let i = 0; i < squareNum; i++) {
+        const el = squares[i];
         el.style.backgroundColor = color;
         el.classList.toggle('active', false);
         el.classList.toggle('inactive', false);
-    });
+    }
     banner.style.backgroundColor = color;
 }
 
@@ -75,6 +91,7 @@ function handleColorClick(e) {
     triggerAnimation(message);
 }
 
+//Initialize clicking color square
 function bindColorClick() {
     const squares = document.querySelectorAll('.square');
     squares.forEach((el) => {
@@ -82,63 +99,45 @@ function bindColorClick() {
     });
 }
 
-function reset(squareNum) {
-    refreshColors(squareNum);
-    pickColor(squareNum);
+function reset() {
+    const message = document.querySelector('.message');
+    const newColors = document.querySelector('.newColors');
+    refreshColors();
+    pickColor();
     message.textContent = '';
     if (newColors.textContent !== 'NEW COLORS') {
         newColors.textContent = 'NEW COLORS';
     }
 }
 
+//Initialize game reset
 function bindNewColors() {
     const newColors = document.querySelector('.newColors');
-    const message = document.querySelector('.message');
-    const hard = document.querySelector('.level .hard');
-    let squareNum = 0;
-    newColors.addEventListener('click', () => {
-        if (hard.classList.contains('selected')) {
-            squareNum = 9;
-        } else {
-            squareNum = 3;
-        }
-        reset(squareNum);
+    newColors.addEventListener('click', reset);
+}
+
+//Initialize choosing difficulty level
+function bindLevels() {
+    const levels = document.querySelectorAll('.level span');
+    levels.forEach((el) => {
+        el.addEventListener('click', () => {
+            if (!el.classList.contains('selected')) {
+                const elSelected = document.querySelector('.selected');
+                el.classList.add('selected');
+                elSelected.classList.remove('selected');
+                refreshColors();
+                pickColor();
+            }
+        });
     });
 }
 
-function bindEasy() {
-    const hard = document.querySelector('.level .hard');
-    const easy = document.querySelector('.level .easy');
-    easy.addEventListener('click', () => {
-        if (!easy.classList.contains('selected')) {
-            refreshColors(3);
-            pickColor(3);
-            easy.classList.add('selected');
-            hard.classList.remove('selected');
-        }
-    })
-}
-
-function bindHard() {
-    const hard = document.querySelector('.level .hard');
-    const easy = document.querySelector('.level .easy');
-    hard.addEventListener('click', () => {
-        if (!hard.classList.contains('selected')) {
-            refreshColors(9);
-            pickColor(9);
-            hard.classList.add('selected');
-            easy.classList.remove('selected');
-        }
-    })
-}
-
-function _main() {
-    refreshColors(9);
-    pickColor(9);
+function _init() {
+    refreshColors();
+    pickColor();
     bindColorClick();
     bindNewColors();
-    bindEasy();
-    bindHard();
+    bindLevels();
 }
 
-_main();
+_init();

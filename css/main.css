@@ -21,7 +21,7 @@ body {
 }
 
 #colorDisplay {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
 }
 
 .menu {
@@ -95,10 +95,9 @@ body {
     display: inline-block;
 }
 
-.newColors:hover, .level span:hover {
+.newColors:active, .level span:active {
     background-color: #808080;
     color: #fff;
-    cursor: pointer;
 }
 
 .selected {
@@ -124,18 +123,35 @@ body {
     transition-duration: .4s;
 }
 
-.square.active:hover {
+.square.active:active {
     transform: scale(1.1);
-    cursor: pointer;
 }
 
 .square.inactive {
     background-color: #232323 !important;
 }
 
-/* Medium devices (tablets, 768px) and up */
+/* Medium devices (tablets, 768px and up) */
 @media screen and (min-width: 768px) {
+    #colorDisplay {
+        font-size: 3.5rem;
+    }
+
     .menu-list {
         max-width: 30rem;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+    .newColors:hover, .level span:hover {
+        background-color: #808080;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .square.active:hover {
+        transform: scale(1.1);
+        cursor: pointer;
     }
 }
