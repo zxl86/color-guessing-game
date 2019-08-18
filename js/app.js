@@ -1,3 +1,5 @@
+'use strict';
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * (Math.floor(max) + 1));
 }
@@ -55,11 +57,12 @@ function changeAllColors(squares, banner, color) {
 function checkChancesLeft(message, newColors) {
     const activeSquares = document.querySelectorAll('.square.active');
     if (activeSquares.length === 2) {
-        message.textContent = 'Last chance!';
+        message.textContent = 'Last try!';
     } else if (activeSquares.length === 1) {
         activeSquares[0].classList.replace('active', 'inactive');
+        activeSquares[0].removeEventListener('click', handleColorClick);
         message.textContent = 'You failed!';
-        newColors.textContent = 'Play again?'
+        newColors.textContent = 'Play again?';
     }
 }
 
@@ -81,10 +84,11 @@ function handleColorClick(e) {
     const newColors = document.querySelector('.newColors');
     if (clickedColor === pickedColor) {
         changeAllColors(squares, banner, pickedColor);
-        message.textContent = 'WELL DONE!';
+        message.textContent = 'Well done!';
         newColors.textContent = 'Play again?';
     } else {
         clickedSquare.classList.replace('active', 'inactive');
+        clickedSquare.removeEventListener('click', handleColorClick);
         message.textContent = 'Try again!';
         checkChancesLeft(message, newColors);
     }
@@ -93,10 +97,16 @@ function handleColorClick(e) {
 
 //Initialize clicking color square
 function bindColorClick() {
+    const squareNum = getSquareNum();
     const squares = document.querySelectorAll('.square');
-    squares.forEach((el) => {
-        el.addEventListener('click', handleColorClick);
-    });
+    for (let i = 0; i < squareNum; i++) {
+        const elShow = squares[i];
+        elShow.addEventListener('click', handleColorClick);
+    }
+    for (let j = squareNum; j < squares.length; j++) {
+        const elHide = squares[j];
+        elHide.removeEventListener('click', handleColorClick);
+    }
 }
 
 function reset() {
@@ -104,10 +114,9 @@ function reset() {
     const newColors = document.querySelector('.newColors');
     refreshColors();
     pickColor();
+    bindColorClick();
     message.textContent = '';
-    if (newColors.textContent !== 'NEW COLORS') {
-        newColors.textContent = 'NEW COLORS';
-    }
+    newColors.textContent = 'New Colors';
 }
 
 //Initialize game reset
@@ -125,8 +134,7 @@ function bindLevels() {
                 const elSelected = document.querySelector('.selected');
                 el.classList.add('selected');
                 elSelected.classList.remove('selected');
-                refreshColors();
-                pickColor();
+                reset();
             }
         });
     });
