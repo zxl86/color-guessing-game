@@ -97,7 +97,7 @@ body {
     display: inline-block;
 }
 
-.touched-newcolors {
+.newColors:active, .level span:active {
     background-color: #808080;
     color: #fff;
 }
@@ -125,7 +125,7 @@ body {
     transition-duration: .4s;
 }
 
-.touched-square {
+.square.active:active {
     transform: scale(1.1);
 }
 
