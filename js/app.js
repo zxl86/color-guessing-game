@@ -96,6 +96,12 @@ function bindColorClick() {
     const squares = document.querySelectorAll('.square');
     squares.forEach((el) => {
         el.addEventListener('click', handleColorClick);
+        el.addEventListener('touchstart', () => {
+            el.classList.add('touched-square');
+        });
+        el.addEventListener('touchend', () => {
+            el.classList.remove('touched-square');
+        });
     });
 }
 
@@ -114,6 +120,12 @@ function reset() {
 function bindNewColors() {
     const newColors = document.querySelector('.newColors');
     newColors.addEventListener('click', reset);
+    newColors.addEventListener('touchstart', () => {
+        newColors.classList.add('touched-newcolors');
+    });
+    newColors.addEventListener('touchend', () => {
+        newColors.classList.remove('touch-newcolors');
+    });
 }
 
 //Initialize choosing difficulty level
