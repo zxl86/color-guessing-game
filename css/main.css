@@ -30,6 +30,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
     font-size: .8rem;
 }
 
@@ -137,11 +138,15 @@ body {
 /* Medium devices (tablets, 768px and up) */
 @media screen and (min-width: 768px) {
     .banner h1 {
-        font-size: initial;
+        font-size: 2rem;
     }
 
     #colorDisplay {
         font-size: 3.5rem;
+    }
+
+    .menu {
+        font-size: initial;
     }
 
     .menu-list {
