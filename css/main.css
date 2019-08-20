@@ -9,6 +9,8 @@ body {
     text-transform: uppercase;
 }
 
+/* --------------- header --------------- */
+
 .banner {
     background-color: transparent;
     text-align: center;
@@ -110,9 +112,16 @@ body {
     cursor: default !important;
 }
 
+/* --------------- main --------------- */
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #container {
-    max-width: 30rem;
-    margin: 0 auto;
+    width: 30rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -133,6 +142,26 @@ body {
 
 .square.inactive {
     background-color: #232323 !important;
+}
+
+#emoji {
+    position: absolute;
+    width: 50%;
+    animation: .5s zoomIn;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0); }
+    70% { transform: scale(1.1); }
+    to { transform: scale(1); }
+}
+
+.hidden {
+    display: none;
+}
+
+#emoji svg {
+    width: 100%;
 }
 
 /* Medium devices (tablets, 768px and up) */

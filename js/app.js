@@ -54,6 +54,15 @@ function changeAllColors(squares, banner, color) {
     banner.style.backgroundColor = color;
 }
 
+function toggleEmoji(b) {
+    const emoji = document.getElementById('emoji');
+    if (b === 'on') {
+        emoji.classList.toggle('hidden', false);
+    } else if (b === 'off') {
+        emoji.classList.toggle('hidden', true);
+    }
+}
+
 function checkChancesLeft(message, newColors) {
     const activeSquares = document.querySelectorAll('.square.active');
     if (activeSquares.length === 2) {
@@ -63,6 +72,7 @@ function checkChancesLeft(message, newColors) {
         activeSquares[0].removeEventListener('click', handleColorClick);
         message.textContent = 'You failed!';
         newColors.textContent = 'Play again?';
+        toggleEmoji('on');
     }
 }
 
@@ -115,6 +125,7 @@ function reset() {
     refreshColors();
     pickColor();
     bindColorClick();
+    toggleEmoji('off');
     message.textContent = '';
     newColors.textContent = 'New Colors';
 }
